@@ -16,10 +16,20 @@ function loadData() {
                 titleLink.href = item.url;  // Assuming 'url' is the attribute for the URL
                 titleLink.textContent = item.title;
                 titleLink.target = "_blank"; // Opens link in a new tab
+                titleCell.appendChild(titleLink);
 
-                titleCell.appendChild(titleLink);  // Append the link to the cell
                 viewsCell.textContent = item.views;
-                thumbnailCell.textContent = item.thumbnail;
+
+                // Create an image element for the thumbnail
+                if (item.thumbnail) {
+                    let thumbnailImage = document.createElement('img');
+                    thumbnailImage.src = item.thumbnail;
+                    thumbnailImage.alt = 'Thumbnail';
+                    thumbnailImage.style.width = '100px'; // Set a width for the thumbnail (you can adjust as needed)
+                    thumbnailCell.appendChild(thumbnailImage);
+                } else {
+                    thumbnailCell.textContent = 'No thumbnail';
+                }
             });
         })
         .catch(error => console.error('Error:', error));
