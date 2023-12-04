@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import json
+import time
 
 channel_url = "https://www.youtube.com/playlist?list=PL2yQDdvlhXf93SMk5EpQVIq4kdWQhUcMV"
 
@@ -27,17 +28,29 @@ videos= driver.find_elements(By.CSS_SELECTOR, "ytd-playlist-video-renderer")
 #Extract title and view count for each video
 video_data = []
 for video in videos:
+
+        #scroll the video elemenet into view to help load images
+        driver.execute_script("arguments[0].scrollIntoView();",video)
+
+        #wait for short period to load image
+        time.sleep(0.1)
+
+
+
         title= video.find_element(By.ID,"video-title").text
         views_line= video.find_element(By.ID,"video-info").text
         views_str= views_line[:views_line.find('views') +len('views')] if 'views' in views_line else ''
         views= convert_views_to_int(views_str)
 
-        thumbnail= video.find_element(By.CSS_SELECTOR, "yt-image img").get_attribute("src")
+
+        thumbnail_img= wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "ytd-thumbnail#thumbnail img")))
+        thumb_url=thumbnail_img.get_attribute("src")
+
         url = video.find_element(By.ID,"video-title").get_attribute("href")
 
-        video_data.append({"title":title, "views": views,"thumbnail":thumbnail,"url":url })
+        video_data.append({"title":title, "views": views,"thumbnail":thumb_url,"url":url })
 
-        #print(url)
+        print(thumb_url)
 
 sorted_by_views=sorted(video_data, key=lambda x: x['views'], reverse=True)
 

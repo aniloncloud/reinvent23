@@ -25,7 +25,7 @@ function loadData() {
                     let thumbnailImage = document.createElement('img');
                     thumbnailImage.src = item.thumbnail;
                     thumbnailImage.alt = 'Thumbnail';
-                    thumbnailImage.style.width = '100px'; // Set a width for the thumbnail (you can adjust as needed)
+                    //thumbnailImage.style.width = '100px'; // Set a width for the thumbnail (you can adjust as needed)
                     thumbnailCell.appendChild(thumbnailImage);
                 } else {
                     thumbnailCell.textContent = 'No thumbnail';
