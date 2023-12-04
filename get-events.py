@@ -31,9 +31,13 @@ for video in videos:
         views_line= video.find_element(By.ID,"video-info").text
         views_str= views_line[:views_line.find('views') +len('views')] if 'views' in views_line else ''
         views= convert_views_to_int(views_str)
-        video_data.append({"title":title, "views": views})
 
-        #print(video_data)
+        thumbnail= video.find_element(By.CSS_SELECTOR, "yt-image img").get_attribute("src")
+        url = video.find_element(By.ID,"video-title").get_attribute("href")
+
+        video_data.append({"title":title, "views": views,"thumbnail":thumbnail,"url":url })
+
+        #print(url)
 
 sorted_by_views=sorted(video_data, key=lambda x: x['views'], reverse=True)
 
@@ -47,3 +51,4 @@ with open('output.json', 'w') as f:
 
 # closing the browser
 driver.quit()
+
