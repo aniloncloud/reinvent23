@@ -10,12 +10,13 @@ function loadData() {
                 let row = tbody.insertRow();
                 let titleCell = row.insertCell(0);
                 let viewsCell = row.insertCell(1);
-                let thumbmail = row.insertCell(2);
-                let url = row.insertCell(3);
+                let thumbmailCell = row.insertCell(2);
+                let urlCell = row.insertCell(3);
+
                 titleCell.textContent = item.title;
                 viewsCell.textContent = item.views;
-                thumbmail.textContent = item.thumbmail;
-                url.textContent = item.url;
+                thumbmailCell.textContent = item.thumbnail;
+                urlCell.textContent = item.url;
             });
         })
         .catch(error => console.error('Error:', error));
