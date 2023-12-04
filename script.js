@@ -1,4 +1,3 @@
-// Function to load and display data from output.json
 function loadData() {
     fetch('output.json')
         .then(response => response.json())
@@ -10,23 +9,20 @@ function loadData() {
                 let row = tbody.insertRow();
                 let titleCell = row.insertCell(0);
                 let viewsCell = row.insertCell(1);
-                let thumbmailCell = row.insertCell(2);
-                let urlCell = row.insertCell(3);
+                let thumbnailCell = row.insertCell(2);
 
-                titleCell.textContent = item.title;
+                // Create hyperlink for title
+                let titleLink = document.createElement('a');
+                titleLink.href = item.url;  // Assuming 'url' is the attribute for the URL
+                titleLink.textContent = item.title;
+                titleLink.target = "_blank"; // Opens link in a new tab
+
+                titleCell.appendChild(titleLink);  // Append the link to the cell
                 viewsCell.textContent = item.views;
-                thumbmailCell.textContent = item.thumbnail;
-                urlCell.textContent = item.url;
+                thumbnailCell.textContent = item.thumbnail;
             });
         })
         .catch(error => console.error('Error:', error));
 }
 
-// Call loadData on page load
 window.onload = loadData;
-
-// Function to sort table
-function sortTable(columnIndex) {
-    // Sorting logic here
-    // Similar to the previous example but adapted for Bootstrap's table structure
-}
