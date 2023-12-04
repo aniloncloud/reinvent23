@@ -35,4 +35,24 @@ function loadData() {
         .catch(error => console.error('Error:', error));
 }
 
-window.onload = loadData;
+function getLastUpdatedDate() {
+    const username = 'aniloncloud';
+    const repo = 'reinvent23';
+    const filePath = 'path/to/output.json'; // If it's in the root, just 'output.json'
+
+    fetch(`https://api.github.com/repos/${username}/${repo}/commits?path=${filePath}`)
+        .then(response => response.json())
+        .then(commits => {
+            if (commits.length > 0) {
+                const lastUpdated = new Date(commits[0].commit.committer.date);
+                document.getElementById('lastUpdatedDate').textContent = `Last Updated: ${lastUpdated.toDateString()}`;
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+window.onload = function() {
+    loadData();
+    getLastUpdatedDate();
+};
+
