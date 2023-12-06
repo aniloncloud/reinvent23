@@ -5,7 +5,7 @@ function loadData() {
             let tbody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
             tbody.innerHTML = ''; // Clear existing table data
 
-            data.forEach(item => {
+            data.sorted_by_views.forEach(item => {
                 let row = tbody.insertRow();
                 let titleCell = row.insertCell(0);
                 let viewsCell = row.insertCell(1);
@@ -36,19 +36,17 @@ function loadData() {
 }
 
 function getLastUpdatedDate() {
-    const username = 'aniloncloud';
-    const repo = 'reinvent23';
-    const filePath = 'path/to/output.json'; // If it's in the root, just 'output.json'
-
-    fetch(`https://api.github.com/repos/${username}/${repo}/commits?path=${filePath}`)
+    fetch('output.json')
         .then(response => response.json())
-        .then(commits => {
-            if (commits.length > 0) {
-                const lastUpdated = new Date(commits[0].commit.committer.date);
-                document.getElementById('lastUpdatedDate').textContent = `Last Updated: ${lastUpdated.toDateString()}`;
+        .then (data => {
+            const snapshotTime = data.snapshot_time;
+            if(snapshot_time)
+            {
+                document.getElementById('lastUpdateDate').textContent = 'Last Updated: $(snapshotTime)';
             }
         })
         .catch(error => console.error('Error:', error));
+    
 }
 
 window.onload = function() {
